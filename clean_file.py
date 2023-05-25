@@ -1,13 +1,10 @@
 import openpyxl as xl  # calling openpyxl package as xl
 from openpyxl.chart import BarChart, Reference
 
-    wb = xl.load_workbook('transactions.xlsx')
 
-    sheet = wb['Sheet1']  # accessing sheet1
-
-    # cell = sheet['A1']
-    # cell = sheet.cell(1, 1)  # cell [1,1]
-    # print("Number of rows in the sheet = ", sheet.max_row)
+def process_workbook(filename):
+    wb = xl.load_workbook(filename)
+    sheet = wb['Sheet1']
 
     for row in range(2, sheet.max_row + 1):  # iteration starts from 2 because we don't need the name of the columns
         cell = sheet.cell(row, 3)  # showing the data of column number 3
@@ -17,9 +14,10 @@ from openpyxl.chart import BarChart, Reference
 
     # now to make a chart select range of values
 
-    values = Reference(sheet, min_row=2, max_row=sheet.max_row, min_col=4, max_col=4)  # we are selecting the cell from row 2 to 4 and only column 4
+    values = Reference(sheet, min_row=2, max_row=sheet.max_row, min_col=4,
+                       max_col=4)  # we are selecting the cell from row 2 to 4 and only column 4
     chart = BarChart()
     chart.add_data(values)
     sheet.add_chart(chart, 'e2')
 
-    wb.save('transactions_2.xlsx')
+    wb.save(filename)
